@@ -1,0 +1,69 @@
+    1  mkdir final_work
+    2  nmcli device status
+    3  nmcli con mod enp0s3 ipv4.addresses 192.168.0.100/24 ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8 ipv4.method manual
+    4  nmcli con up enp0s3 
+    5  nmcli device status
+    6  ip addr show
+    7  ip route
+    8  ping -c 3 8.8.8.8
+    9  hostnamectl set-hostname mephi-2026.domain.local
+   10  hostname status
+   11  hostnamectl status
+   12  ping -c 4 8.8.8.8 > /tmp/network_check.txt
+   13  ping -c 4 192.168.0.1 >> /tmp/network_check.txt
+   14  cat /tmp/network_check.txt
+   15  sudo dnf install nginx tcpdump libcap-ng-utils -y
+   16  nginx -v
+   17  tcpdump --version
+   18  capsh --print
+   19  cd /tmp
+   20  dnf download tcpdump
+   21  sudo dnf remove tcpdump
+   22  sudo rpm -ivh tcpdump-4.99.6-2.fc43.x86_64.rpm 
+   23  cd ~/
+   24  lsblk
+   25  sudo fdisk /dev/sdb
+   26  sudo mkfs.ext4 -L MEPHI_DATA /dev/sdb1
+   27  sudo mkdir -p /data/mephi-web
+   28  sudo vi /etc/fstab 
+   29  sudo mount -a
+   30  df -h
+   31  sudo systemctl enable --now nginx
+   32  sudo journalctl -u nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+   33  cat /tmp/nginx_recent_logs.txt
+   34  sudo groupadd mephi-devs
+   35  useradd -m -g mephi-devs mephi-admin
+   36  sudo useradd -m -g mephi-devs mephi-admin
+   37  echo "mephi-admin:P@ssw0rd2026" | sudo chpasswd
+   38  sudo chown mephi-admin:mephi-devs /data/mephi-web
+   39  sudo chmod 2775 /data/mephi-web
+   40  ls -ld /data/mephi-web
+   41  getenforce
+   42  sudo semanage fcontext -a -t httpd_sys_content_t "/data/mephi-web(/.*)?"
+   43  sudo restorecon -Rv /data/mephi-web
+   44  ls -Z /data/mephi-web
+   45  sudo chmod u-s /usr/sbin/tcpdump 
+   46  sudo setcap "cap_net_raw,cap_net_admin+ep" /usr/sbin/tcpdump 
+   47  sudo -u mephi-admin tcpdump --help
+   48  echo "root" | sudo tee /etc/ssh/denied_users
+   49  sudo vi /etc/pam.d/postlogin 
+   50  sudo sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+   51  sudo systemctl restart sshd
+   52  sudo firewall-cmd --permanent --add-service=http
+   53  sudo firewall-cmd --reload
+   54  su - mephi-admin
+   55  history
+   56  sudo -u mephi-admin bash -c 'echo "Hello from Student: ДН001" > /data/mephi-web/index.html'
+   57  sudo vi /etc/nginx/nginx.conf
+   58  sudo vi /etc/nginx/conf.d/mephi.conf
+   59  sudo nginx -t
+   60  sudo systemctl restart nginx
+   61  curl http://192.168.10.100
+   62  curl http://192.168.0.100
+   63  curl http://localhost
+   64  sudo vi /etc/nginx/nginx.conf
+   65  sudo vi /etc/nginx/conf.d/mephi.conf
+   66  sudo nginx -t
+   67  sudo systemctl restart nginx
+   68  curl http://localhost
+   69  history > final_work/project_history.txt

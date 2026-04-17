@@ -1,0 +1,2 @@
+uid=1001(mephi-admin) gid=1001(mephi-devs) группы=1001(mephi-devs)
+mephi-devs:x:1001:
